@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.EventInvited" table="event_invited">
+        <id name="invitedId" type="java.lang.Integer">
+            <column name="invited_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="eventDetail" class="orm.EventDetail" fetch="select">
+            <column name="event" not-null="true" />
+        </many-to-one>
+        <many-to-one name="christian" class="orm.Christian" fetch="select">
+            <column name="invited" not-null="true" />
+        </many-to-one>
+        <property name="attended" type="char">
+            <column name="attended" length="1" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

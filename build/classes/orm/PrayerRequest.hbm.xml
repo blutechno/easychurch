@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.PrayerRequest" table="prayer_request">
+        <id name="requestId" type="java.lang.Integer">
+            <column name="request_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="christian" class="orm.Christian" fetch="select">
+            <column name="requestor" not-null="true" />
+        </many-to-one>
+        <property name="prayerIntention" type="string">
+            <column name="prayer_intention" length="45" not-null="true" />
+        </property>
+        <property name="requestDate" type="date">
+            <column name="request_date" length="10" not-null="true" />
+        </property>
+        <property name="requestType" type="string">
+            <column name="request_type" length="45" not-null="true" />
+        </property>
+        <property name="preferedPrayerDate" type="date">
+            <column name="prefered_prayer_date" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

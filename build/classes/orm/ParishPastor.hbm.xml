@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.ParishPastor" table="parish_pastor">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="parish" class="orm.Parish" fetch="select">
+            <column name="parish" not-null="true" />
+        </many-to-one>
+        <many-to-one name="pastor" class="orm.Pastor" fetch="select">
+            <column name="pastor" not-null="true" />
+        </many-to-one>
+        <property name="designationDate" type="date">
+            <column name="designation_date" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

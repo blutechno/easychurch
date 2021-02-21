@@ -1,0 +1,370 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * ParishPastorGUI.java
+ *
+ * Created on May 3, 2012, 1:54:40 PM
+ */
+package orm.dao.Impl.GUI;
+
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import orm.DAOFactory;
+import orm.Notifier;
+import orm.Parish;
+import orm.ParishPastor;
+import orm.Pastor;
+
+/**
+ *
+ * @author jean pierre
+ */
+public class ParishPastorGUI extends javax.swing.JInternalFrame {
+
+    private DAOFactory daoFactory = DAOFactory.getInstance();
+
+    /** Creates new form ParishPastorGUI */
+    public ParishPastorGUI() {
+        initComponents();
+        setChurch();
+        setPastors();
+    }
+
+    private void setChurch() {
+        cmbChurch.removeAllItems();
+        for (Parish p : daoFactory.getParishDAO().findAll()) {
+            cmbChurch.addItem(p.getParishName());
+        }
+    }
+
+    private void setPastors() {
+        cmbPastor.removeAllItems();
+        for (Pastor p : daoFactory.getPastorDAO().findAll()) {
+            cmbPastor.addItem(p.getPastorshipCode());
+        }
+    }
+
+    private void clear() {
+        clearTable();
+        cmbChurch.setSelectedIndex(0);
+        cmbPastor.setSelectedIndex(0);
+        chNominationDate.setDate(null);
+    }
+
+    private void clearTable() {
+        Vector<String> tableHeaders = new Vector<String>();
+        Vector tableData = new Vector();
+        tableHeaders.add("ID");
+        tableHeaders.add("First Name");
+        tableHeaders.add("Last Name");
+        tableHeaders.add("Designation Date");
+        tableHeaders.add("Education Level");
+        Vector<Object> oneRow = new Vector<Object>();
+        oneRow.add("");
+        oneRow.add("");
+        oneRow.add("");
+        oneRow.add("");
+        oneRow.add("");
+        oneRow.add("");
+        tableData.add(oneRow);
+        table.setModel(new DefaultTableModel(tableData, tableHeaders));
+    }
+
+    private void save() {
+        try {
+            ParishPastor ppastor = new ParishPastor();
+            ParishPastor temp = new ParishPastor();
+            boolean isNew = false;
+            for (ParishPastor pp : daoFactory.getParishPastorDAO().findByParish((String) cmbChurch.getSelectedItem())) {
+                if (pp.getPastor().getPastorshipCode().equals((String) cmbPastor.getSelectedItem())) {
+                    isNew = true;
+                    temp = pp;
+                    break;
+                }
+            }
+            if (!isNew) {
+                ppastor.setDesignationDate(chNominationDate.getDate());
+                ppastor.setParish(daoFactory.getParishDAO().findByName((String) cmbChurch.getSelectedItem()));
+                ppastor.setPastor(daoFactory.getPastorDAO().findByCode((String) cmbPastor.getSelectedItem()));
+                Notifier.notifier(daoFactory.getParishPastorDAO().saveOrUpdateParishPastor(ppastor));
+            } else {
+                int i = JOptionPane.showConfirmDialog(null, "This Pastor is already assigned to this church. Do you want to update his/her nomination date?", "Notification Message", JOptionPane.INFORMATION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+                if (i == 0) {
+                    ppastor = temp;
+                    ppastor.setDesignationDate(chNominationDate.getDate());
+                    ppastor.setParish(daoFactory.getParishDAO().findByName((String) cmbChurch.getSelectedItem()));
+                    ppastor.setPastor(daoFactory.getPastorDAO().findByCode((String) cmbPastor.getSelectedItem()));
+                    Notifier.notifier(daoFactory.getParishPastorDAO().saveOrUpdateParishPastor(ppastor));
+                }
+            }
+        } catch (Exception ex) {
+        }
+    }
+
+    private void search() {
+        Vector<String> tableHeaders = new Vector<String>();
+        Vector tableData = new Vector();
+        tableHeaders.add("ID");
+        tableHeaders.add("First Name");
+        tableHeaders.add("Last Name");
+        tableHeaders.add("Designation Date");
+        tableHeaders.add("Education Level");
+        List<ParishPastor> temp = daoFactory.getParishPastorDAO().findByParish((String) cmbChurch.getSelectedItem());
+        if (temp.isEmpty()) {
+        } else {
+            int i = 1;
+            for (ParishPastor pp : temp) {
+                Vector<Object> oneRow = new Vector<Object>();
+                oneRow.add(i);
+                oneRow.add(pp.getPastor().getFirstName());
+                oneRow.add(pp.getPastor().getLastName());
+                oneRow.add(pp.getDesignationDate().toString());
+                oneRow.add(pp.getPastor().getEducationLevel());
+                tableData.add(oneRow);
+                i++;
+            }
+            table.setModel(new DefaultTableModel(tableData, tableHeaders));
+        }
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        chNominationDate = new com.toedter.calendar.JDateChooser();
+        cmbPastor = new javax.swing.JComboBox();
+        cmbChurch = new javax.swing.JComboBox();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+
+        jToolBar1.setBackground(new java.awt.Color(0, 0, 0));
+        jToolBar1.setRollover(true);
+
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Clear");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        jButton2.setBackground(new java.awt.Color(0, 0, 0));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Save");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton2);
+
+        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Search");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
+
+        jButton6.setBackground(new java.awt.Color(0, 0, 0));
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Exit");
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton6);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nomination of Pastor to Church", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 153, 0)));
+
+        jLabel1.setText("Church:");
+
+        jLabel2.setText("Pastor:");
+
+        jLabel3.setText("Nomination Date:");
+
+        chNominationDate.setDateFormatString("dd/MM/yyyy");
+
+        cmbPastor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPastor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbPastorItemStateChanged(evt);
+            }
+        });
+
+        cmbChurch.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbChurch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbPastor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chNominationDate, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cmbChurch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbPastor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chNominationDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "List of Pastors Nominated to Church", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 153, 0)));
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(table);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    clear();
+}//GEN-LAST:event_jButton1ActionPerformed
+
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    save();
+}//GEN-LAST:event_jButton2ActionPerformed
+
+private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    search();
+}//GEN-LAST:event_jButton3ActionPerformed
+
+private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    this.dispose();
+}//GEN-LAST:event_jButton6ActionPerformed
+
+private void cmbPastorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPastorItemStateChanged
+    try {
+        Pastor p = daoFactory.getPastorDAO().findByCode((String) cmbPastor.getSelectedItem());
+        cmbPastor.setToolTipText(p.getFirstName() + " " + p.getLastName());
+    } catch (Exception ex) {
+    }
+}//GEN-LAST:event_cmbPastorItemStateChanged
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser chNominationDate;
+    private javax.swing.JComboBox cmbChurch;
+    private javax.swing.JComboBox cmbPastor;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable table;
+    // End of variables declaration//GEN-END:variables
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Wedding" table="wedding">
+        <id name="weddingId" type="java.lang.Integer">
+            <column name="wedding_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="pastor" class="orm.Pastor" fetch="select">
+            <column name="celebrant" />
+        </many-to-one>
+        <property name="husband" type="string">
+            <column name="husband" length="45" not-null="true" />
+        </property>
+        <property name="husbandGodFather" type="string">
+            <column name="husband_god_father" length="45" not-null="true" />
+        </property>
+        <property name="wife" type="string">
+            <column name="wife" length="45" not-null="true" />
+        </property>
+        <property name="wifeGodMother" type="string">
+            <column name="wife_god_mother" length="45" not-null="true" />
+        </property>
+        <property name="weddingDay" type="date">
+            <column name="wedding_day" length="10" not-null="true" />
+        </property>
+        <property name="ceremonyFees" type="int">
+            <column name="ceremony_fees" not-null="true" />
+        </property>
+        <property name="weddingFeesPayStatus" type="char">
+            <column name="wedding_fees_pay_status" length="1" not-null="true" />
+        </property>
+        <property name="weddingTime" type="string">
+            <column name="wedding_time" length="15" not-null="true" />
+        </property>
+        <property name="weddingCautionFees" type="int">
+            <column name="wedding_caution_fees" not-null="true" />
+        </property>
+        <property name="cautionRefundedStatus" type="char">
+            <column name="caution_refunded_status" length="1" not-null="true" />
+        </property>
+        <property name="createdOn" type="date">
+            <column name="created_on" length="10" not-null="true" />
+        </property>
+        <property name="weddingCautionPayStatus" type="char">
+            <column name="wedding_caution_pay_status" length="1" not-null="true" />
+        </property>
+        <property name="weddingCode" type="string">
+            <column name="wedding_code" length="4" not-null="true" unique="true" />
+        </property>
+        <property name="weddingStatus" type="java.lang.Character">
+            <column name="wedding_status" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

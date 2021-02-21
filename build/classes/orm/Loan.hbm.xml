@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Loan" table="loan">
+        <id name="loanId" type="java.lang.Integer">
+            <column name="loan_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="loanType" class="orm.LoanType" fetch="select">
+            <column name="loan_type" not-null="true" />
+        </many-to-one>
+        <many-to-one name="christian" class="orm.Christian" fetch="select">
+            <column name="beneficiary" not-null="true" />
+        </many-to-one>
+        <property name="loanAmount" type="int">
+            <column name="loan_amount" not-null="true" />
+        </property>
+        <property name="loanDate" type="date">
+            <column name="loan_date" length="10" not-null="true" />
+        </property>
+        <property name="loanCode" type="string">
+            <column name="loan_code" length="6" not-null="true" />
+        </property>
+        <property name="interestRate" type="int">
+            <column name="interest_rate" not-null="true" />
+        </property>
+        <property name="refundDeadline" type="date">
+            <column name="refund_deadline" length="10" not-null="true" />
+        </property>
+        <property name="refundStatus" type="char">
+            <column name="refund_status" length="1" not-null="true" />
+        </property>
+        <property name="amountToRepay" type="int">
+            <column name="amount_to_repay" not-null="true" />
+        </property>
+        <set name="loanRefundings" inverse="true">
+            <key>
+                <column name="loan" not-null="true" />
+            </key>
+            <one-to-many class="orm.LoanRefunding" />
+        </set>
+    </class>
+</hibernate-mapping>

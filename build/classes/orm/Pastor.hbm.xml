@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Pastor" table="pastor">
+        <id name="pastorId" type="java.lang.Integer">
+            <column name="pastor_id" />
+            <generator class="identity" />
+        </id>
+        <property name="firstName" type="string">
+            <column name="first_name" length="45" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="45" not-null="true" />
+        </property>
+        <property name="gender" type="char">
+            <column name="gender" length="1" not-null="true" />
+        </property>
+        <property name="educationLevel" type="string">
+            <column name="education_level" length="45" not-null="true" />
+        </property>
+        <property name="maritalStatus" type="char">
+            <column name="marital_status" length="1" not-null="true" />
+        </property>
+        <property name="spouseName" type="string">
+            <column name="spouse_name" length="45" />
+        </property>
+        <property name="pastorshipCode" type="string">
+            <column name="pastorship_code" length="8" not-null="true" unique="true" />
+        </property>
+        <set name="weddings" inverse="true">
+            <key>
+                <column name="celebrant" />
+            </key>
+            <one-to-many class="orm.Wedding" />
+        </set>
+        <set name="parishPastors" inverse="true">
+            <key>
+                <column name="pastor" not-null="true" />
+            </key>
+            <one-to-many class="orm.ParishPastor" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Christian" table="christian">
+        <id name="christianId" type="java.lang.Integer">
+            <column name="christian_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="parish" class="orm.Parish" fetch="select">
+            <column name="parish" not-null="true" />
+        </many-to-one>
+        <property name="firstName" type="string">
+            <column name="first_name" length="30" not-null="true" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="30" not-null="true" />
+        </property>
+        <property name="middleName" type="string">
+            <column name="middle_name" length="30" />
+        </property>
+        <property name="fullName" type="string">
+            <column name="full_name" length="90" not-null="true" />
+        </property>
+        <property name="dateOfBirth" type="date">
+            <column name="date_of_birth" length="10" not-null="true" />
+        </property>
+        <property name="gender" type="char">
+            <column name="gender" length="1" not-null="true" />
+        </property>
+        <property name="fatherName" type="string">
+            <column name="father_name" length="45" not-null="true" />
+        </property>
+        <property name="motherName" type="string">
+            <column name="mother_name" length="45" not-null="true" />
+        </property>
+        <property name="maritalStatus" type="char">
+            <column name="marital_status" length="1" not-null="true" />
+        </property>
+        <property name="educationLevel" type="string">
+            <column name="education_level" length="45" not-null="true" />
+        </property>
+        <property name="profession" type="string">
+            <column name="profession" length="45" not-null="true" />
+        </property>
+        <property name="createdOn" type="date">
+            <column name="created_on" length="10" not-null="true" />
+        </property>
+        <property name="isActive" type="char">
+            <column name="is_active" length="1" not-null="true" />
+        </property>
+        <property name="christianPin" type="string">
+            <column name="christian_pin" length="6" not-null="true" unique="true" />
+        </property>
+        <property name="baptismDate" type="date">
+            <column name="baptism_date" length="10" />
+        </property>
+        <property name="baptisedHere" type="java.lang.Character">
+            <column name="baptised_here" length="1" />
+        </property>
+        <property name="spouseFirstName" type="string">
+            <column name="spouse_firstName" length="45" />
+        </property>
+        <property name="spouseLastName" type="string">
+            <column name="spouse_lastName" length="45" />
+        </property>
+        <set name="eventInviteds" inverse="true">
+            <key>
+                <column name="invited" not-null="true" />
+            </key>
+            <one-to-many class="orm.EventInvited" />
+        </set>
+        <set name="christianSacrements" inverse="true">
+            <key>
+                <column name="christian" not-null="true" />
+            </key>
+            <one-to-many class="orm.ChristianSacrement" />
+        </set>
+        <set name="christianContacts" inverse="true">
+            <key>
+                <column name="christian" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="orm.ChristianContact" />
+        </set>
+        <set name="prayerRequests" inverse="true">
+            <key>
+                <column name="requestor" not-null="true" />
+            </key>
+            <one-to-many class="orm.PrayerRequest" />
+        </set>
+        <set name="loans" inverse="true">
+            <key>
+                <column name="beneficiary" not-null="true" />
+            </key>
+            <one-to-many class="orm.Loan" />
+        </set>
+        <set name="christianZones" inverse="true">
+            <key>
+                <column name="christian" not-null="true" />
+            </key>
+            <one-to-many class="orm.ChristianZone" />
+        </set>
+    </class>
+</hibernate-mapping>

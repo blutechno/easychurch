@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.ChristianContact" table="christian_contact">
+        <id name="christian" type="int">
+            <column name="christian" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="christian_1" class="orm.Christian" update="false" insert="false" fetch="select">
+            <column name="christian" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="phoneNumber" type="string">
+            <column name="phone_number" length="12" not-null="true" unique="true" />
+        </property>
+        <property name="otherTelephone" type="string">
+            <column name="other_telephone" length="12" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="otherEmail" type="string">
+            <column name="other_email" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

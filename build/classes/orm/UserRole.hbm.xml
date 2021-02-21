@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.UserRole" table="user_role">
+        <composite-id name="id" class="orm.UserRoleId">
+            <key-property name="user" type="int">
+                <column name="user" />
+            </key-property>
+            <key-property name="role" type="int">
+                <column name="role" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="user" class="orm.User" update="false" insert="false" fetch="select">
+            <column name="user" not-null="true" />
+        </many-to-one>
+        <many-to-one name="role" class="orm.Role" update="false" insert="false" fetch="select">
+            <column name="role" not-null="true" />
+        </many-to-one>
+        <property name="assignedOn" type="date">
+            <column name="assigned_on" length="10" not-null="true" />
+        </property>
+        <property name="expiredOn" type="date">
+            <column name="expired_on" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

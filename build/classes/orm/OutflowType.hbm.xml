@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.OutflowType" table="outflow_type">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="outflowTypeName" type="string">
+            <column name="outflow_type_name" length="45" not-null="true" unique="true" />
+        </property>
+        <set name="outflows" inverse="true">
+            <key>
+                <column name="outflow_type" not-null="true" />
+            </key>
+            <one-to-many class="orm.Outflow" />
+        </set>
+    </class>
+</hibernate-mapping>

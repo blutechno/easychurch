@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.LoanRefunding" table="loan_refunding">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="user" class="orm.User" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+        <many-to-one name="loan" class="orm.Loan" fetch="select">
+            <column name="loan" not-null="true" />
+        </many-to-one>
+        <property name="paidAmount" type="int">
+            <column name="paid_amount" not-null="true" />
+        </property>
+        <property name="remainAmount" type="int">
+            <column name="remain_amount" not-null="true" />
+        </property>
+        <property name="refundDate" type="date">
+            <column name="refund_date" length="10" not-null="true" />
+        </property>
+        <property name="deposer" type="string">
+            <column name="deposer" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

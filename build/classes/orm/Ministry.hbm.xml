@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Ministry" table="ministry">
+        <id name="ministryId" type="java.lang.Integer">
+            <column name="ministryId" />
+            <generator class="identity" />
+        </id>
+        <property name="designation" type="string">
+            <column name="designation" length="100" not-null="true" unique="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="200" not-null="true" />
+        </property>
+        <property name="frequency" type="string">
+            <column name="frequency" length="45" not-null="true" />
+        </property>
+        <property name="startTime" type="string">
+            <column name="startTime" length="15" not-null="true" />
+        </property>
+        <property name="serviceDuration" type="string">
+            <column name="serviceDuration" length="20" not-null="true" />
+        </property>
+        <property name="concernedGroup" type="string">
+            <column name="concernedGroup" length="45" not-null="true" />
+        </property>
+        <property name="status" type="char">
+            <column name="status" length="1" not-null="true" />
+        </property>
+        <set name="ministryDetails" inverse="true">
+            <key>
+                <column name="ministry" not-null="true" />
+            </key>
+            <one-to-many class="orm.MinistryDetail" />
+        </set>
+    </class>
+</hibernate-mapping>

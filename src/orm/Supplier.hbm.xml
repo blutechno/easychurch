@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Supplier" table="supplier">
+        <id name="supplierId" type="java.lang.Integer">
+            <column name="supplier_id" />
+            <generator class="identity" />
+        </id>
+        <property name="designation" type="string">
+            <column name="designation" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="12" not-null="true" unique="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="location" type="string">
+            <column name="location" length="45" not-null="true" unique="true" />
+        </property>
+        <set name="supplyBills" inverse="true">
+            <key>
+                <column name="supply" not-null="true" />
+            </key>
+            <one-to-many class="orm.SupplyBill" />
+        </set>
+        <set name="supplierItems" inverse="true">
+            <key>
+                <column name="supplier" not-null="true" />
+            </key>
+            <one-to-many class="orm.SupplierItem" />
+        </set>
+    </class>
+</hibernate-mapping>

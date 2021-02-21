@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/e_church</property>
+    <property name="hibernate.connection.username">root</property>
+    <mapping resource="orm/Parish.hbm.xml"/>
+    <mapping resource="orm/Christian.hbm.xml"/>
+    <mapping resource="orm/ChristianContact.hbm.xml"/>
+    <mapping resource="orm/EventDetail.hbm.xml"/>
+    <mapping resource="orm/ParishPastor.hbm.xml"/>
+    <mapping resource="orm/PrayerRequest.hbm.xml"/>
+    <mapping resource="orm/ChristianSacrement.hbm.xml"/>
+    <mapping resource="orm/Loan.hbm.xml"/>
+    <mapping resource="orm/EventIncome.hbm.xml"/>
+    <mapping resource="orm/Offertory.hbm.xml"/>
+    <mapping resource="orm/Zone.hbm.xml"/>
+    <mapping resource="orm/LoanType.hbm.xml"/>
+    <mapping resource="orm/ChristianZone.hbm.xml"/>
+    <mapping resource="orm/LoanRefunding.hbm.xml"/>
+    <mapping resource="orm/Ministry.hbm.xml"/>
+    <mapping resource="orm/SupplyBill.hbm.xml"/>
+    <mapping resource="orm/MinistryDetail.hbm.xml"/>
+    <mapping resource="orm/SupplyBillDetail.hbm.xml"/>
+    <mapping resource="orm/IncomeType.hbm.xml"/>
+    <mapping resource="orm/Income.hbm.xml"/>
+    <mapping resource="orm/OffertoryType.hbm.xml"/>
+    <mapping resource="orm/User.hbm.xml"/>
+    <mapping resource="orm/SupplierItem.hbm.xml"/>
+    <mapping resource="orm/UserLog.hbm.xml"/>
+    <mapping resource="orm/UserRole.hbm.xml"/>
+    <mapping resource="orm/Pastor.hbm.xml"/>
+    <mapping resource="orm/Role.hbm.xml"/>
+    <mapping resource="orm/EventInvited.hbm.xml"/>
+    <mapping resource="orm/Outflow.hbm.xml"/>
+    <mapping resource="orm/Supplier.hbm.xml"/>
+    <mapping resource="orm/OutflowType.hbm.xml"/>
+    <mapping resource="orm/EventType.hbm.xml"/>
+    <mapping resource="orm/Wedding.hbm.xml"/>
+    <mapping resource="orm/Sacrement.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Parish" table="parish">
+        <id name="parishId" type="java.lang.Integer">
+            <column name="parish_id" />
+            <generator class="identity" />
+        </id>
+        <property name="parishName" type="string">
+            <column name="parish_name" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="foundationYear" type="int">
+            <column name="foundation_year" not-null="true" />
+        </property>
+        <property name="location" type="string">
+            <column name="Location" length="45" not-null="true" />
+        </property>
+        <set name="christians" inverse="true">
+            <key>
+                <column name="parish" not-null="true" />
+            </key>
+            <one-to-many class="orm.Christian" />
+        </set>
+        <set name="ministryDetails" inverse="true">
+            <key>
+                <column name="location" not-null="true" />
+            </key>
+            <one-to-many class="orm.MinistryDetail" />
+        </set>
+        <set name="parishPastors" inverse="true">
+            <key>
+                <column name="parish" not-null="true" />
+            </key>
+            <one-to-many class="orm.ParishPastor" />
+        </set>
+    </class>
+</hibernate-mapping>

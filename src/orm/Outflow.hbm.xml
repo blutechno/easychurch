@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.Outflow" table="outflow">
+        <id name="outflowId" type="java.lang.Integer">
+            <column name="outflow_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="outflowType" class="orm.OutflowType" fetch="select">
+            <column name="outflow_type" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="orm.User" fetch="select">
+            <column name="authorizer" not-null="true" />
+        </many-to-one>
+        <property name="outflowAmount" type="int">
+            <column name="outflow_amount" not-null="true" />
+        </property>
+        <property name="checkNumber" type="string">
+            <column name="check_number" length="15" not-null="true" unique="true" />
+        </property>
+        <property name="outflowDate" type="date">
+            <column name="outflow_date" length="10" not-null="true" />
+        </property>
+        <property name="outflowReference" type="string">
+            <column name="outflow_reference" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

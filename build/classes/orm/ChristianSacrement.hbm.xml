@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.ChristianSacrement" table="christian_sacrement">
+        <composite-id name="id" class="orm.ChristianSacrementId">
+            <key-property name="christian" type="int">
+                <column name="christian" />
+            </key-property>
+            <key-property name="sacrement" type="int">
+                <column name="sacrement" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="sacrement" class="orm.Sacrement" update="false" insert="false" fetch="select">
+            <column name="sacrement" not-null="true" />
+        </many-to-one>
+        <many-to-one name="christian" class="orm.Christian" update="false" insert="false" fetch="select">
+            <column name="christian" not-null="true" />
+        </many-to-one>
+        <property name="celebrationDate" type="date">
+            <column name="celebration_date" length="10" not-null="true" />
+        </property>
+        <property name="celebrant" type="string">
+            <column name="celebrant" length="70" not-null="true" />
+        </property>
+        <property name="celebratedHere" type="char">
+            <column name="celebrated_here" length="1" not-null="true" />
+        </property>
+        <property name="godParent" type="string">
+            <column name="god_parent" length="45" not-null="true" />
+        </property>
+        <property name="godParentParish" type="string">
+            <column name="god_parent_parish" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

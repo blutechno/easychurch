@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 18, 2012 3:59:11 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="orm.EventIncome" table="event_income">
+        <id name="EIncomeId" type="java.lang.Integer">
+            <column name="e_income_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="eventDetail" class="orm.EventDetail" fetch="select">
+            <column name="event" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="orm.User" fetch="select">
+            <column name="create_by" not-null="true" />
+        </many-to-one>
+        <property name="createdOn" type="date">
+            <column name="created_on" length="10" not-null="true" />
+        </property>
+        <property name="income" type="int">
+            <column name="income" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
